@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Organizador de Casos</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <h1>Histórico de Processos</h1>
+                <!-- Input de pesquisa -->
+                <select id="categoriaPesquisa">      
+                    <option value="nome">Nome</option>
+					<option value="codigo">Código</option>
+                </select>
+                <input type="text" id="nomePesquisa" placeholder="Digite um nome">
+                <button onclick="pesquisar()">Pesquisar</button>
+
+                <!-- Resultados da pesquisa -->
+                <div id="resultado"></div>
+                <!-- Lista de Nomes (exemplo) -->
+                <h2>Lista de Nomes</h2>
+                <ul id="listaNomes">
+                    <li>João</li>
+                    <li>Maria</li>
+                    <li>123</li>
+                </ul>
+
+                <!-- Lista de Códigos e Tipos de Crime -->
+                <h2>Lista de Códigos e Tipos de Crime</h2>
+                <ul id="listaCodigos">
+                    <li>001 - Roubo</li>
+                    <li>002 - Furto</li>
+                    <li>003 - Assalto</li>
+                </ul>
+                <div class="container-login100-form-btn">
+					<a href="Processo.html" class="login100-form-btn">Adicionar Processo</a>
+				</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+		const nomes = ["João", "Maria", "123"];
+        const codigos = ["001 - Roubo", "002 - Furto", "003 - Assalto"];
+
+		// Função de pesquisa
+        function pesquisar() {
+            const categoria = document.getElementById("categoriaPesquisa").value;
+            const termoPesquisa = document.getElementById("nomePesquisa").value.toLowerCase();
+            const listaResultados = document.getElementById("resultado");
+
+            // Limpar resultados anteriores
+            listaResultados.innerHTML = "";
+
+            let lista;
+            if (categoria === "nome") {
+                lista = document.getElementById("listaNomes").getElementsByTagName("li");
+            } else if (categoria === "codigo") {
+                lista = document.getElementById("listaCodigos").getElementsByTagName("li");
+            } else {
+                listaResultados.textContent = "Categoria de pesquisa inválida.";
+                return;
+            }
+
+            // Redefinir a cor padrão para todos os elementos na lista
+            for (const item of lista) {
+                item.style.color = "";
+            }
+
+            for (const item of lista) {
+                const textoItem = item.textContent.toLowerCase();
+                if (textoItem.includes(termoPesquisa)) {
+                    item.style.color = "#b8860b";
+                }
+            }
+        }
+	</script>
+    
+</body>
+
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+</html>

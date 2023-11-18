@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Organizador de Casos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style>
+        /* Adicione margem na parte inferior de cada div que contém um campo de entrada e rótulo */
+        .wrap-input100 {
+            margin-bottom: 15px; /*ajustar o espaçamento*/
+        }
+        .login100-form{
+            margin-bottom: 15px;
+        }
+    </style>
+
+</head>
+<body> 
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form class="login100-form validate-form">
+                    <span class="login100-form-title" style="font-size: 28px; color: rgb(0, 0, 0); font-weight: bold;">
+                        Processo Criminal
+                    </span>
+                    <!-- Seu conteúdo do formulário aqui -->
+                </form>
+
+                <!-- Informações do Processo Criminal -->
+                <div class="wrap-input100">
+                    <label for="cliente">Nome Cliente:</label>
+                    <input type="text" id="cliente" name="cliente" class="input100"> </div>
+                <div class="wrap-input100 validate-input">
+                    <label for="numero_processo">Número do Processo:</label>
+                    <input class="input100" type="text" id="numero_processo" name="numero_processo">
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <label for="status">Status do Processo:</label>
+                    <input class="input100" type="text" id="status" name="status">
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <label for="tipo_crime">Tipo de Crime:</label>
+                    <input class="input100" type="text" id="tipo_crime" name="tipo_crime" >
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <label for="honorario">Honorário Fixo/Hora:</label>
+                    <input class="input100" type="text" id="honorario" name="honorario">
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <label for="lembretes">Lembretes:</label>
+                    <button onclick="adicionarLembrete()">Adicionar Lembrete</button>
+                    <div id="lembretesContainer"></div>
+                </div>
+				<div class="wrap-input100 validate-input">
+					<label for="documentos">Documentos:</label>
+					<input type="file" id="documentos" name="documentos" accept=".pdf" multiple>
+				</div>
+                
+                <div class="wrap-input100 validate-input">
+                    <label for="contatos">Contatos:</label>
+                    <input class="input100" type="text" id="contatos" name="contatos" >
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <label for="registro_testemunhas">Registro de Testemunhas:</label>
+                    <input class="input100" type="text" id="registro_testemunhas" name="registro_testemunhas">
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <label for="nome_juiz">Nome do Juiz:</label>
+                    <input class="input100" type="text" id="nome_juiz" name="nome_juiz">
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <label for="promotoria">Nome da Promotoria:</label>
+                    <input class="input100" type="text" id="promotoria" name="promotoria" >
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    <label for="descricaoDespesa">Descrição da Despesa:</label>
+                    <input type="text" id="descricaoDespesa" name="descricaoDespesa">
+                    <label for="despesas">Adicionar Despesas:</label>
+                    <input type="number" id="despesas" name="despesas">
+                    <button onclick="adicionarDespesa()">Adicionar</button>
+                </div>
+                
+                <!-- Lista de despesas -->
+                <div>
+                    <label>Lista de Despesas:</label>
+                    <ul id="listaDespesas"></ul>
+                </div>
+                
+                <!-- Total das despesas -->
+                <div>
+                    <label>Total das Despesas:</label>
+                    <span id="totalDespesas">0</span>
+                </div>
+                
+
+                <!-- Botão de Salvar -->
+                <div class="container-login100-form-btn">
+                    <a href="#" class="login100-form-btn">Salvar</a>
+                </div>
+                <div class="container-login100-form-btn">
+                    <a href="agenda.html" class="login100-form-btn">Agenda</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- Script JavaScript para gerenciar a calculadora de despesas -->
+<script>
+    // Array para armazenar as despesas
+    const despesas = [];
+    
+    // Função para adicionar despesa à lista
+    function adicionarDespesa() {
+        const inputDespesas = document.getElementById("despesas");
+        const valorDespesa = parseFloat(inputDespesas.value);
+        const inputDescricao = document.getElementById("descricaoDespesa");
+        
+        if (!isNaN(valorDespesa)) {
+            despesas.push({ valor: valorDespesa, descricao: inputDescricao.value }); // Adiciona a despesa ao array
+            inputDespesas.value = ""; // Limpa o campo de entrada
+            inputDescricao.value = ""; // Limpa o campo de descrição
+            atualizarListaDespesas(); // Atualiza a lista de despesas
+            calcularTotalDespesas(); // Calcula o total das despesas
+        }
+    }
+    
+    // Função para atualizar a lista de despesas
+    function atualizarListaDespesas() {
+        const listaDespesas = document.getElementById("listaDespesas");
+        listaDespesas.innerHTML = ""; // Limpa a lista
+        
+        // Adiciona cada despesa como um item de lista
+        despesas.forEach((despesa, index) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `Despesa ${index + 1}: ${despesa.descricao} - R$ ${despesa.valor.toFixed(2)}`;
+            listaDespesas.appendChild(listItem);
+        });
+    }
+    
+    // Função para calcular o total das despesas
+    function calcularTotalDespesas() {
+        const totalDespesas = document.getElementById("totalDespesas");
+        const total = despesas.reduce((acc, despesa) => acc + despesa.valor, 0);
+        totalDespesas.textContent = `R$ ${total.toFixed(2)}`; // Exibe o total formatado
+    }
+
+    function adicionarLembrete() {
+        const lembretesContainer = document.getElementById("lembretesContainer");
+        const textarea = document.createElement("textarea");
+        textarea.placeholder = "Insira seu lembrete aqui";
+        lembretesContainer.appendChild(textarea);
+    }
+</script>
+</html>

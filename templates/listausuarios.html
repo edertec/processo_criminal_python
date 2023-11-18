@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consulta de Usuário</title>
+    <style>
+        /* Mesmos estilos da tela de cadastro */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: auto;
+            width: 80%;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Consulta de Usuários</h2>
+        <form method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" required>
+            <input type="submit" value="Consultar">
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Senha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[2] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <a href="{{ url_for('cadusuario') }}">Cadastrar Novo Usuário</a>
+    </div>
+</body>
+</html>

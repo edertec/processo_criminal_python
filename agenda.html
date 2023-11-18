@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <style>
+        /* Definições de estilo para a tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        /* Estilo para linhas atrasadas */
+        .atrasado {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agenda</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Evento</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas da tabela contendo eventos -->
+            <tr>
+                <td>10/10/2023</td>
+                <td>13:30</td>
+                <td>Abertura do Processo</td>
+            </tr>
+            <tr>
+                <td>20/10/2023</td>
+                <td>14:30</td>
+                <td>Reunião com o cliente Edertec</td>
+            </tr>
+            <tr>
+                <td>25/11/2023</td>
+                <td>09:30</td>
+                <td>Tribunal do Júri no caso XXXX</td>
+            </tr>
+            <!-- Adicione mais eventos aqui -->
+        </tbody>    
+    </table>
+    <button onclick="adicionarLinha()">Adicionar Evento</button>
+
+    <script>
+        // Função para adicionar uma nova linha à tabela
+        function adicionarLinha() {
+            var tabela = document.querySelector("table tbody");
+            var novaLinha = document.createElement("tr");
+
+            var novaData = document.createElement("td");
+            novaData.textContent = "Nova Data";
+
+            var novaHora = document.createElement("td");
+            novaHora.textContent = "Nova Hora";
+
+            var novoEvento = document.createElement("td");
+            novoEvento.textContent = "Novo Evento";
+
+            novaLinha.appendChild(novaData);
+            novaLinha.appendChild(novaHora);
+            novaLinha.appendChild(novoEvento);
+
+            tabela.appendChild(novaLinha);
+
+            destacarLinhas(); // Destacar a nova linha após adicioná-la
+        }
+// Função para destacar as linhas com base na data
+        function destacarLinhas() {
+        var linhas = document.querySelectorAll("table tbody tr");
+        var dataAtual = new Date(); // Obtém a data atual do sistema
+        var dataMaisProxima = null;
+
+        linhas.forEach(function (linha) {
+            var dataString = linha.querySelector("td:first-child").textContent;
+            var partesData = dataString.split('/');
+            var dataEvento = new Date(partesData[2], partesData[1] - 1, partesData[0]);
+
+            if (dataEvento < dataAtual) {
+                linha.classList.add("atrasado"); // Adiciona a classe "atrasado" para todas as linhas com datas antigas
+            } else {
+                linha.classList.remove("atrasado"); // Remove a classe "atrasado" se a data não for antiga
+                if (dataMaisProxima === null || dataEvento < dataMaisProxima) {
+                    dataMaisProxima = dataEvento;
+                }
+            }
+        });
+
+    }
+
+    // Chama a função para destacar as linhas na inicialização da página
+    destacarLinhas();
+    </script>
+</body>
+</html>
